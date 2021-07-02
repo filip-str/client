@@ -1,0 +1,8 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Visualization of Computer Science Publications</span>
+    <div>
+      <a mat-button *ngFor="let route of routes" [routerLink]="route.path">{{route.name}}</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

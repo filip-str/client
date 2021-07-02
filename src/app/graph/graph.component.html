@@ -1,0 +1,78 @@
+<div class="mat-elevation-z6 defaultMargin">
+  <div class="defaultPadding">
+    <mat-card-subtitle>Co-author interactive graph</mat-card-subtitle>
+    <mat-card style="display: flex">
+      <mat-form-field *ngIf="searchOptions.length === 0" style="width: 360px">
+        <mat-label>Enter one author or multiple separated by comma</mat-label>
+        <input type="search" matInput placeholder="Search" (search)="onSearch()" [(ngModel)]="searchInput">
+      </mat-form-field>
+      <mat-form-field *ngIf="searchOptions.length" style="width: 360px">
+        <mat-label>{{searchInput}} - multiple results</mat-label>
+        <mat-select [(value)]="selectedSearchOption" (selectionChange)="createGraph($event.value)">
+          <mat-option *ngFor="let option of searchOptions" [value]="option.value">
+            {{option.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="searchOptions.length === 0" style="width: 100px; margin-left: 10px">
+        <mat-label>Co-author order</mat-label>
+        <mat-select [(value)]="selectedOrderOption">
+          <mat-option *ngFor="let option of orderOptions" [value]="option.value">
+            {{option.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button *ngIf="nodes.length && searchOptions.length === 0" style="margin: 0 10px" mat-stroked-button (click)="newGraph()" [color]="'warn'">
+        Clear all
+      </button>
+      <button *ngIf="searchOptions.length" style="margin: 0 10px" mat-stroked-button (click)="skipSearch()" [color]="'warn'">
+        Clear
+      </button>
+      <button *ngIf="nodes.length  && searchOptions.length === 0" style="margin-left: 50px" mat-raised-button (click)="exportSVG()" [color]="'primary'">
+        Save Graph as svg
+      </button>
+      <button *ngIf="nodes.length  && searchOptions.length === 0" style="margin-left: 10px" mat-raised-button (click)="exportData()" [color]="'primary'">
+        Save Graph as raw data
+      </button>
+      <mat-slide-toggle
+      *ngIf="nodes.length  && searchOptions.length === 0"
+      style="margin-left: 10px"
+          [color]="'primary'"
+          [checked]="highlightOnHover"
+          (change)="onHighlightChange($event)">
+        Toggle Highlight on hover
+      </mat-slide-toggle>
+    </mat-card>
+  </div>
+  <div class="defaultPadding" *ngIf="nodes.length  && searchOptions.length === 0">
+    <mat-card>
+      <mat-form-field style="width: 360px">
+        <mat-label>Search authors in graph</mat-label>
+        <input type="text"
+           placeholder="Search Graph"
+           aria-label="Search Graph"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onGraphSearch($event.option.value)">
+            <mat-option *ngFor="let option of filteredGraphSearchOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+      </mat-form-field>
+      <button *ngIf="graphSearch" style="margin: 0 10px" mat-stroked-button (click)="clearGraphSearch()" [color]="'warn'">
+        Clear
+      </button>
+    </mat-card>
+  </div>
+  <div class="defaultPadding">
+    <mat-card>
+      <input id="file" type="file" (change)="onChange($event)" />
+    </mat-card>
+  </div>
+  <div class="defaultPadding">
+    <mat-card style="padding: 0">
+      <div #canvas style="height: calc(100vh - 64px);"></div>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+.defaultPadding {
+  padding: 5px 25px;
+}
+
+.defaultMargin {
+  margin: 10px 25px;
+}
+
+
+.my-form-full-width {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  vertical-align: center;
+  color: #000066;
+}
+
+::ng-deep {
+  .jsnx {
+    .line {
+      stroke-width: 4px !important;
+      &:hover {
+        stroke: blue !important;
+      }
+    }
+    circle {
+      opacity: 0.8;
+    }
+
+    text {
+      pointer-events: none;
+      opacity: 1;
+    }
+  }
+  .hovered, .searchedGraph {
+    circle:not(.highlighted):not(.searched) {
+      opacity: 0.12 !important;
+
+      & ~ text {
+        opacity: 0.12 !important;
+      }
+    }
+
+    circle.highlighted, circle.searched {
+      opacity: 1 !important;
+    }
+
+    path:not(.highlighted):not(.searched) {
+      opacity: 0.12 !important;
+    }
+  }
+}
+

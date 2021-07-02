@@ -1,0 +1,7 @@
+{
+  "*": {
+    "target": "https://vcsp-6890e.web.app/",
+    "secure": true,
+    "changeOrigin": true
+  }
+}
